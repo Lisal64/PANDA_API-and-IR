@@ -18,7 +18,7 @@ class Document:
     def tokenize(self) -> list[str]:
         stem_sonnet = []
         token_sonnet = []
-        punct = [".", "'", ":", ";", "!", "?", '"' "'", ","]  # issue lies within this punctuation thing
+        punct = [".", "'", ":", ";", "!", "?", '"' "'", ","]
         for line in self.lines.split("\n"):
             words = line.split()
             for word in words:
@@ -42,7 +42,6 @@ class Query(Document):
         super().__init__([query])
 
 
-# create class Sonnet with tokenizing method
 class Sonnet(Document):
     def __init__(self, sonnet: dict):
         super().__init__(sonnet['lines'])
@@ -53,7 +52,7 @@ class Sonnet(Document):
     @staticmethod
     def get_id(sonnet):
         sonnet_lst = sonnet['title'].split()
-        sonnet_id = sonnet_lst[1].rstrip(':')
+        sonnet_id = int(sonnet_lst[1].rstrip(':'))
         return sonnet_id
 
     @staticmethod
@@ -72,7 +71,6 @@ class Sonnet(Document):
         return super().tokenize()
 
 
-# creating class Index and adding the tokens to set
 class Index(dict[str, set[int]]):
     def __init__(self, documents: list[Sonnet]):
         super().__init__()
@@ -119,4 +117,3 @@ all_sonnets = [Sonnet(sonnet) for sonnet in sonnets]
 idx_sonnets = Index(all_sonnets)
 input_text = "Please type in the words you want to search the sonnets for: "
 idx_sonnets.ui(input_text)
-all_sonnets[34].tokenize()
